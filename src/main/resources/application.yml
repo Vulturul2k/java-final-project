@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: project
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        default_schema: project
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        ddl-auto: none
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    table: project_schema_version
+    baseline-version: 0
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+app:
+  name: "Book Exchange Platform"
+  version: "1.0.0"
+  features:
+    offers:
+      enabled: true
+      maxPerUser: 10
+    notifications:
+      enabled: true
+      async: true
+
+vars:
+  security:
+    enable: true
+
+server:
+  port: 8082
+
+token:
+  ttl: 3600000
+  secret: "https://www.youtube.com/watch?v=VBUMYOYJISc"
+
+admin:
+  username: admin
+  email: admin@admin.com
+  password: admin
+
