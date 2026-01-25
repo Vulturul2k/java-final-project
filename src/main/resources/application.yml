@@ -2,23 +2,21 @@ spring:
   application:
     name: project
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5434/postgres?sslmode=disable
     username: postgres
     password: postgres
   jpa:
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         default_schema: project
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
-        ddl-auto: none
+        hbm2ddl:
+          create_namespaces: true
     open-in-view: false
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-    validate-on-migrate: false
-    table: project_schema_version
-    baseline-version: 0
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

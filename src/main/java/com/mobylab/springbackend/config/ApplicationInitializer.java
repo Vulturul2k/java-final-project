@@ -28,7 +28,8 @@ public class ApplicationInitializer implements CommandLineRunner {
     @Value("${admin.email}")
     private String adminEmail;
 
-    public ApplicationInitializer(PasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
+    public ApplicationInitializer(PasswordEncoder passwordEncoder, UserRepository userRepository,
+            RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -36,16 +37,15 @@ public class ApplicationInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Role adminRole = roleRepository.findRoleByName("ADMIN")
+                .orElseGet(() -> roleRepository.save(new Role().setName("ADMIN")));
+        roleRepository.findRoleByName("USER")
+                .orElseGet(() -> roleRepository.save(new Role().setName("USER")));
+
         Optional<User> admin = userRepository.findUserByEmail(adminEmail);
         if (admin.isEmpty()) {
             List<Role> roleList = new ArrayList<>();
-
-            Optional<Role> adminRole = roleRepository.findRoleByName("ADMIN");
-            if (adminRole.isEmpty()) {
-                throw new RuntimeException("Admin role not found in the database!");
-            }
-
-            roleList.add(adminRole.get());
+            roleList.add(adminRole);
             User initAdmin = new User()
                     .setUsername(adminUsername)
                     .setEmail(adminEmail)
