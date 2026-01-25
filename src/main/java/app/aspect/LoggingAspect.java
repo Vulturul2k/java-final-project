@@ -64,13 +64,13 @@ public class LoggingAspect {
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
 
-            logger.info("⏱ [TIMING] {}.{}() - Timp execuție: {} ms",
+            logger.info("[TIMING] {}.{}() - Timp execuție: {} ms",
                     className, methodName, duration);
 
             return result;
         } catch (Throwable e) {
             long endTime = System.currentTimeMillis();
-            logger.error("⏱ [TIMING] {}.{}() - Eșuat după {} ms",
+            logger.error("[TIMING] {}.{}() - Eșuat după {} ms",
                     className, methodName, (endTime - startTime));
             throw e;
         }

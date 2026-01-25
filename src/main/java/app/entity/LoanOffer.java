@@ -9,16 +9,16 @@ import java.time.LocalDateTime;
 public class LoanOffer extends Offer {
 
     @Column(name = "loan_duration_days")
-    private Integer loanDurationDays; // Duration of the loan in days
+    private Integer loanDurationDays;
 
     @Column(name = "return_date")
-    private LocalDateTime returnDate; // Expected return date
+    private LocalDateTime returnDate;
 
     @Column(name = "late_fee_per_day")
-    private Double lateFeePerDay; // Optional late fee
+    private Double lateFeePerDay;
 
     @Column(name = "deposit_required")
-    private Boolean depositRequired = false; // Whether a deposit is required
+    private Boolean depositRequired = false;
 
     public Integer getLoanDurationDays() {
         return loanDurationDays;

@@ -8,10 +8,10 @@ import jakarta.persistence.*;
 public class BookExchangeOffer extends Offer {
 
     @Column(name = "exchange_notes")
-    private String exchangeNotes; // Additional notes about the exchange
+    private String exchangeNotes;
 
     @Column(name = "is_negotiable")
-    private Boolean isNegotiable = true; // Whether the exchange terms are negotiable
+    private Boolean isNegotiable = true;
 
     public String getExchangeNotes() {
         return exchangeNotes;

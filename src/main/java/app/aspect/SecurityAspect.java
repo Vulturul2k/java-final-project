@@ -29,7 +29,7 @@ public class SecurityAspect {
         String methodName = joinPoint.getSignature().getName();
         String clientInfo = getClientInfo();
 
-        logger.info("🔐 [AUTH] Încercare de {} - {}", methodName, clientInfo);
+        logger.info("[AUTH] Încercare de {} - {}", methodName, clientInfo);
     }
 
     @Before("securedEndpoints()")
@@ -38,7 +38,7 @@ public class SecurityAspect {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String username = getCurrentUsername();
 
-        logger.info("🔒 [ACCESS] User '{}' accesează {}.{}",
+        logger.info("[ACCESS] User '{}' accesează {}.{}",
                 username, className, methodName);
     }
 

@@ -1,7 +1,5 @@
 package app.exception;
 
-
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +11,7 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({BadRequestException.class})
+    @ExceptionHandler({ BadRequestException.class })
     public ResponseEntity<ErrorObject> handleBadRequest(RuntimeException ex, WebRequest request) {
         ErrorObject errorObject = new ErrorObject();
 
@@ -24,7 +22,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorObject, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({InternalServerErrorException.class})
+    @ExceptionHandler({ InternalServerErrorException.class })
     public ResponseEntity<ErrorObject> handleInternalServerError(RuntimeException ex, WebRequest request) {
         ErrorObject errorObject = new ErrorObject();
 
@@ -34,7 +32,5 @@ public class GlobalExceptionHandler {
                 .setTimestamp(LocalDateTime.now());
         return new ResponseEntity<>(errorObject, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 
 }

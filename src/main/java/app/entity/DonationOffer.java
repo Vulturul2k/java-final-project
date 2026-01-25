@@ -8,13 +8,13 @@ import jakarta.persistence.*;
 public class DonationOffer extends Offer {
 
     @Column(name = "donation_message")
-    private String donationMessage; // Message from donor
+    private String donationMessage;
 
     @Column(name = "is_charity")
-    private Boolean isCharity = false; // Whether this is for a charitable cause
+    private Boolean isCharity = false;
 
     @Column(name = "pickup_required")
-    private Boolean pickupRequired = false; // Whether receiver must pick up books
+    private Boolean pickupRequired = false;
 
     public String getDonationMessage() {
         return donationMessage;

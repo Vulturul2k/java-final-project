@@ -14,7 +14,7 @@ public class NotificationService {
 
     @Async("taskExecutor")
     public CompletableFuture<Void> sendOfferCreatedNotification(String receiverEmail, String senderEmail) {
-        logger.info("📧 [ASYNC] Sending offer notification to {} from {} (Thread: {})",
+        logger.info("[ASYNC] Sending offer notification to {} from {} (Thread: {})",
                 receiverEmail, senderEmail, Thread.currentThread().getName());
 
         // Simulate notification processing time
@@ -24,13 +24,13 @@ public class NotificationService {
             Thread.currentThread().interrupt();
         }
 
-        logger.info("✅ [ASYNC] Offer notification sent successfully to {}", receiverEmail);
+        logger.info("[ASYNC] Offer notification sent successfully to {}", receiverEmail);
         return CompletableFuture.completedFuture(null);
     }
 
     @Async("taskExecutor")
     public CompletableFuture<Void> sendOfferAcceptedNotification(String senderEmail, String receiverEmail) {
-        logger.info("✅ [ASYNC] Sending acceptance notification to {} (accepted by {}) (Thread: {})",
+        logger.info("[ASYNC] Sending acceptance notification to {} (accepted by {}) (Thread: {})",
                 senderEmail, receiverEmail, Thread.currentThread().getName());
 
         try {
@@ -39,13 +39,13 @@ public class NotificationService {
             Thread.currentThread().interrupt();
         }
 
-        logger.info("✅ [ASYNC] Acceptance notification sent to {}", senderEmail);
+        logger.info("[ASYNC] Acceptance notification sent to {}", senderEmail);
         return CompletableFuture.completedFuture(null);
     }
 
     @Async("taskExecutor")
     public CompletableFuture<Void> sendOfferRejectedNotification(String senderEmail, String receiverEmail) {
-        logger.info("❌ [ASYNC] Sending rejection notification to {} (rejected by {}) (Thread: {})",
+        logger.info("[ASYNC] Sending rejection notification to {} (rejected by {}) (Thread: {})",
                 senderEmail, receiverEmail, Thread.currentThread().getName());
 
         try {
@@ -54,13 +54,13 @@ public class NotificationService {
             Thread.currentThread().interrupt();
         }
 
-        logger.info("❌ [ASYNC] Rejection notification sent to {}", senderEmail);
+        logger.info("[ASYNC] Rejection notification sent to {}", senderEmail);
         return CompletableFuture.completedFuture(null);
     }
 
     @Async("taskExecutor")
     public CompletableFuture<String> processOfferAnalytics(String offerId) {
-        logger.info("📊 [ASYNC] Processing analytics for offer {} (Thread: {})",
+        logger.info("[ASYNC] Processing analytics for offer {} (Thread: {})",
                 offerId, Thread.currentThread().getName());
 
         try {
@@ -70,7 +70,7 @@ public class NotificationService {
         }
 
         String result = "Analytics completed for offer: " + offerId;
-        logger.info("📊 [ASYNC] {}", result);
+        logger.info("[ASYNC] {}", result);
         return CompletableFuture.completedFuture(result);
     }
 }

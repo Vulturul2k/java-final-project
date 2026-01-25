@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -141,5 +142,69 @@ class BookServiceTest {
         // Assert
         assertTrue(result);
         verify(bookRepository, times(1)).delete(book);
+    }
+
+    @Test
+    void getAllBooks_ShouldReturnAllBooks() {
+        Book book = new Book();
+        book.setTitle("T");
+        book.setAuthor("A");
+
+        when(bookRepository.findAll()).thenReturn(List.of(book));
+
+        List<BookWithOwnerDto> result = bookService.getAllBooks();
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getBookOwnerEmail_ShouldReturnEmail() {
+        String email = "owner@test.com";
+        User owner = new User();
+        owner.setEmail(email);
+        Book book = new Book();
+        book.setOwner(owner);
+
+        when(bookRepository.getBooksByTitle("Title")).thenReturn(Optional.of(List.of(book)));
+
+        String result = bookService.getBookOwnerEmail("Title");
+
+        assertEquals(email, result);
+    }
+
+    @Test
+    void addBook_ShouldThrowException_WhenLimitReached() {
+        BookDto dto = new BookDto();
+        dto.setTitle("T");
+        dto.setAuthor("A");
+        String email = "u@e.com";
+        User user = new User();
+        user.setEmail(email);
+        user.setId(UUID.randomUUID());
+
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        UserDetails userDetails = mock(UserDetails.class);
+
+        mockedSecurityContextHolder = Mockito.mockStatic(SecurityContextHolder.class);
+        mockedSecurityContextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getPrincipal()).thenReturn(userDetails);
+        when(userDetails.getUsername()).thenReturn(email);
+
+        when(userRepository.findUserByEmail(email)).thenReturn(Optional.of(user));
+
+        // Mock finding 11 books
+        List<Book> books = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            Book b = new Book();
+            b.setOwner(user);
+            books.add(b);
+        }
+        when(bookRepository.findAll()).thenReturn(books);
+
+        assertThrows(RuntimeException.class, () -> bookService.addBook(dto));
+
+        mockedSecurityContextHolder.close();
     }
 }
