@@ -46,7 +46,8 @@ public class BookServie {
                 .map(book -> new BookWithOwnerDto()
                         .setAuthor(book.getAuthor())
                         .setTitle(book.getTitle())
-                        .setOwnerEmail(book.getOwner() != null ? book.getOwner().getEmail() : null))
+                        .setOwnerEmail(book.getOwner() != null ? book.getOwner().getEmail() : null)
+                        .setOwnerUsername(book.getOwner() != null ? book.getOwner().getUsername() : null))
                 .collect(Collectors.toList());
     }
 
