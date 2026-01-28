@@ -24,16 +24,16 @@ public class AuthController {
 
     private AuthService authService;
 
-    private LoginResponseDto loginResponseDto;
+    @org.springframework.beans.factory.annotation.Value("${token.ttl}")
+    private long tokenTtl;
 
-    public AuthController(AuthService authService, LoginResponseDto loginResponseDto) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.loginResponseDto = loginResponseDto;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    @RequestMapping(path ="/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
         logger.info("Request to register user {}", registerDto.getEmail());
         authService.register(registerDto);
@@ -41,12 +41,13 @@ public class AuthController {
         return new ResponseEntity<>("User registered", HttpStatus.CREATED);
     }
 
-    @RequestMapping(path ="/login", method = RequestMethod.POST)
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        // de ce nu am 2 dto-uri
         System.out.println("respondToOffer() called with id = " + loginDto.getEmail());
         logger.info("Request to login for user {}", loginDto.getEmail());
         String token = authService.login(loginDto);
         logger.info("Successfully logged in user {}", loginDto.getEmail());
-        return new ResponseEntity<>(loginResponseDto.setToken(token), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponseDto().setToken(token).setExpire(tokenTtl), HttpStatus.OK);
     }
 }

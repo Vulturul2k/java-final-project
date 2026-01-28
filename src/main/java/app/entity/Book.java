@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "book")
+@Table(name = "book", schema = "project")
 public class Book {
     @Id
     @GeneratedValue()
@@ -17,8 +17,6 @@ public class Book {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-
-
     public UUID getId() {
         return id;
     }
@@ -26,7 +24,6 @@ public class Book {
     public void setId(UUID id) {
         this.id = id;
     }
-
 
     public String getTitle() {
         return title;
