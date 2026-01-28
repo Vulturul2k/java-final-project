@@ -43,8 +43,6 @@ public class AuthController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
-        // de ce nu am 2 dto-uri
-        System.out.println("respondToOffer() called with id = " + loginDto.getEmail());
         logger.info("Request to login for user {}", loginDto.getEmail());
         String token = authService.login(loginDto);
         logger.info("Successfully logged in user {}", loginDto.getEmail());

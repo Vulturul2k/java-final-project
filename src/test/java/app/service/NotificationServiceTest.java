@@ -25,4 +25,24 @@ class NotificationServiceTest {
         // Assert
         assertNotNull(future);
     }
+
+    @Test
+    void sendOfferRejectedNotification_ShouldReturnCompletedFuture() {
+        // Act
+        CompletableFuture<Void> future = notificationService.sendOfferRejectedNotification("u1", "u2");
+
+        // Assert
+        assertNotNull(future);
+    }
+
+    @Test
+    void processOfferAnalytics_ShouldReturnCompletedFutureWithResult() {
+        // Act
+        CompletableFuture<String> future = notificationService.processOfferAnalytics("offer123");
+
+        // Assert
+        assertNotNull(future);
+        String result = future.join();
+        assertTrue(result.contains("offer123"));
+    }
 }

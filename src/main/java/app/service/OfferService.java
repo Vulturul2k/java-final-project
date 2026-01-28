@@ -109,7 +109,7 @@ public class OfferService {
         // Book book = requested.getBook();
         // bookServie.deleteBookByTitleAndOwner(book.getTitle(),
         // book.getOwner().getEmail());
-        // }
+        // }imi
         for (OfferedBook ob : offer.getOfferedBooks()) {
             Book book = ob.getBook();
             bookServie.deleteBookByTitleAndOwner(book.getTitle(), book.getOwner().getEmail());
