@@ -4,7 +4,6 @@ import app.entity.Role;
 import app.entity.User;
 import app.repository.RoleRepository;
 import app.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

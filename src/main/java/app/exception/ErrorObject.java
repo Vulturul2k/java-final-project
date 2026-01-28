@@ -2,11 +2,9 @@ package app.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-// @Component
 public class ErrorObject {
     @JsonProperty("error_code")
     private Integer statusCode;

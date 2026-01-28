@@ -22,15 +22,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorObject, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({ InternalServerErrorException.class })
-    public ResponseEntity<ErrorObject> handleInternalServerError(RuntimeException ex, WebRequest request) {
-        ErrorObject errorObject = new ErrorObject();
-
-        errorObject
-                .setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .setMessage(ex.getMessage())
-                .setTimestamp(LocalDateTime.now());
-        return new ResponseEntity<>(errorObject, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
 }
