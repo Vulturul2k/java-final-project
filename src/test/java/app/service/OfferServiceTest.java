@@ -99,8 +99,10 @@ class OfferServiceTest {
             return o;
         });
 
+        CreateOfferFromContextDto dto = new CreateOfferFromContextDto();
+        dto.setOfferType("DONATION");
         // Act
-        OfferDto result = offerService.createOffer(sender, receiver, List.of(), List.of(), "DONATION");
+        OfferDto result = offerService.createOffer(sender, receiver, List.of(), List.of(), dto);
 
         // Assert
         assertEquals("DONATION", result.getOfferType());
@@ -122,8 +124,10 @@ class OfferServiceTest {
             return o;
         });
 
+        CreateOfferFromContextDto dto = new CreateOfferFromContextDto();
+        dto.setOfferType("LOAN");
         // Act
-        OfferDto result = offerService.createOffer(sender, receiver, List.of(), List.of(), "LOAN");
+        OfferDto result = offerService.createOffer(sender, receiver, List.of(), List.of(), dto);
 
         // Assert
         assertEquals("LOAN", result.getOfferType());

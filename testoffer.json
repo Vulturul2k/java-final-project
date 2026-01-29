@@ -1,0 +1,37 @@
+[
+    {
+        "receiverEmail": "receiver@example.com",
+        "offeredBookTitles": [
+            "My Book"
+        ],
+        "requestedBookTitles": [
+            "Their Book"
+        ],
+        "offerType": "EXCHANGE",
+        "exchangeNotes": "I can also throw in a bookmark!",
+        "isNegotiable": true
+    },
+    {
+        "receiverEmail": "receiver@example.com",
+        "offeredBookTitles": [
+            "My Book to Donate"
+        ],
+        "requestedBookTitles": [],
+        "offerType": "DONATION",
+        "donationMessage": "Enjoy the read!",
+        "isCharity": false,
+        "pickupRequired": true
+    },
+    {
+        "receiverEmail": "receiver@example.com",
+        "offeredBookTitles": [
+            "My Book to Loan"
+        ],
+        "requestedBookTitles": [],
+        "offerType": "LOAN",
+        "loanDurationDays": 14,
+        "returnDate": "2023-12-31T12:00:00",
+        "lateFeePerDay": 0.50,
+        "depositRequired": true
+    }
+]

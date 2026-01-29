@@ -7,6 +7,7 @@ import app.service.dto.OfferDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -34,34 +35,41 @@ public class OfferService {
 
         List<UUID> offeredBooks = resolveBookIdsFromTitles(dto.getOfferedBookTitles(), sender.getId());
         List<UUID> requestedBooks = resolveBookIdsFromTitles(dto.getRequestedBookTitles(), receiver.getId());
-
-        String offerType = dto.getOfferType() != null ? dto.getOfferType() : "EXCHANGE";
-        return createOffer(sender, receiver, offeredBooks, requestedBooks, offerType);
+        return createOffer(sender, receiver, offeredBooks, requestedBooks, dto);
     }
 
     public OfferDto createOffer(User sender, User receiver, List<UUID> offeredBookIds, List<UUID> requestedBookIds,
-            String offerType) {
+            CreateOfferFromContextDto dto) {
         Offer offer;
+        String offerType = dto.getOfferType() != null ? dto.getOfferType() : "EXCHANGE";
 
         switch (offerType.toUpperCase()) {
             case "DONATION":
                 DonationOffer donationOffer = new DonationOffer();
-                donationOffer.setDonationMessage("Thank you for accepting my donation!");
-                donationOffer.setIsCharity(false);
-                donationOffer.setPickupRequired(false);
+                donationOffer.setDonationMessage(dto.getDonationMessage() != null ? dto.getDonationMessage()
+                        : "Hello");
+                donationOffer.setIsCharity(dto.getIsCharity() != null ? dto.getIsCharity() : false);
+                donationOffer.setPickupRequired(dto.getPickupRequired() != null ? dto.getPickupRequired() : false);
                 offer = donationOffer;
                 break;
             case "LOAN":
                 LoanOffer loanOffer = new LoanOffer();
-                loanOffer.setLoanDurationDays(30);
-                loanOffer.setDepositRequired(false);
+                loanOffer.setLoanDurationDays(
+                        dto.getLoanDurationDays() != null ? dto.getLoanDurationDays() : 30);
+                loanOffer.setDepositRequired(dto.getDepositRequired() != null ? dto.getDepositRequired() : false);
+                loanOffer.setLateFeePerDay(dto.getLateFeePerDay());
+                if (dto.getReturnDate() != null) {
+                    loanOffer.setReturnDate(LocalDateTime.parse(dto.getReturnDate()));
+                }
                 offer = loanOffer;
                 break;
             case "EXCHANGE":
             default:
                 BookExchangeOffer exchangeOffer = new BookExchangeOffer();
-                exchangeOffer.setIsNegotiable(true);
-                exchangeOffer.setExchangeNotes("Standard book exchange");
+                exchangeOffer.setIsNegotiable(
+                        dto.getIsNegotiable() != null ? dto.getIsNegotiable() : true);
+                exchangeOffer.setExchangeNotes(
+                        dto.getExchangeNotes() != null ? dto.getExchangeNotes() : "Standard book exchange");
                 offer = exchangeOffer;
                 break;
         }
